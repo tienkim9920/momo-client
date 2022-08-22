@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Momo Success</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script>
+</head>
+
+<body>
+    <div id="text-success"></div>
+
+    <script>
+        const fetchData = async () => {
+            const serectkey = "uLb683H8g9dWuiyipZbLHgO6zjSDlVm5"
+            const accessKey = new URLSearchParams(search).get('accessKey')
+            const amount = new URLSearchParams(search).get('amount')
+            const extraData = new URLSearchParams(search).get('extraData')
+            const errorCode = new URLSearchParams(search).get('errorCode')
+            const localMessage = new URLSearchParams(search).get('localMessage')
+            const message = new URLSearchParams(search).get('message')
+            const orderId = new URLSearchParams(search).get('orderId')
+            const orderInfo = new URLSearchParams(search).get('orderInfo')
+            const orderType = new URLSearchParams(search).get('orderType')
+            const partnerCode = new URLSearchParams(search).get('partnerCode')
+            const payType = new URLSearchParams(search).get('payType')
+            const requestId = new URLSearchParams(search).get('requestId')
+            const responseTime = new URLSearchParams(search).get('responseTime')
+            const transId = new URLSearchParams(search).get('transId')
+
+            const param = `partnerCode=${partnerCode}&accessKey=${accessKey}&requestId=${requestId}&amount=${amount}&orderId=${orderId}&orderInfo=${orderInfo}&orderType=${orderType}&transId=${transId}&message=${message}&localMessage=${localMessage}&responseTime=${responseTime}&errorCode=${errorCode}&payType=${payType}&extraData=${extraData}`
+
+            const hash = CryptoJS.HmacSHA256(rawSignature, serectkey);
+            const signature = CryptoJS.enc.Base64.stringify(hash);
+
+            if (new URLSearchParams(search).get('signature') !== signature) {
+                document.getElementById("text-success").innerHTML = "Information Request Invalid";
+                return;
+            }
+            if (errorCode == 0) {
+                if (!information) {
+                    window.location.href = '/'
+                    return
+                }
+                document.getElementById("text-success").innerHTML = "You Have Ordered Successfully";
+            } else {
+                document.getElementById("text-success").innerHTML = "You Have Ordered Fail";
+            }
+
+        }
+        fetchData();
+    </script>
+</body>
+
+</html>
