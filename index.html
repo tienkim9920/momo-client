@@ -26,16 +26,16 @@
         const accessKey = "XPBbArMut5PxmWiY";
         const serectkey = "uLb683H8g9dWuiyipZbLHgO6zjSDlVm5";
         const orderInfo = "Thanh toán MoMo";
-        const notifyurl = "";
+        const notifyurl = "http://localhost:8000/momo";
         const returnUrl = "http://localhost:5500/success/";
-        const amount = "50000";
+        const amount = '50000';
         const orderId = Math.random().toString();
         const requestType = "captureMoMoWallet";
         const extraData = "merchantName=Payment";
-        const rawSignature = `partnerCode=${partnerCode}&accessKey=${accessKey}&requestId=${orderId}&amount=${amount}&orderId=${orderId}&orderInfo=${orderInfo}&returnUrl=${returnUrl}&notifyUrl=${notifyurl}&extraData=${extraData}`
+        const rawSignature = `partnerCode=${partnerCode}&accessKey=${accessKey}&requestId=${orderId}&amount=${amount}&orderId=${orderId}&orderInfo=${orderInfo}&returnUrl=${returnUrl}&notifyUrl=${notifyurl}&extraData=${extraData}`;
 
         const hash = CryptoJS.HmacSHA256(rawSignature, serectkey);
-        const signature = CryptoJS.enc.Base64.stringify(hash);
+        const signature = CryptoJS.enc.Hex.stringify(hash);
 
         const paymentMomo = () => {
             const body = JSON.stringify({
